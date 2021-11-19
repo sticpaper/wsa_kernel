@@ -3010,6 +3010,10 @@ static void sd_read_block_characteristics(struct scsi_disk *sdkp)
 		blk_queue_flag_clear(QUEUE_FLAG_ADD_RANDOM, q);
 	}
 
+	/* In any case, it is always regarded as a non-rotating disk */
+	blk_queue_flag_set(QUEUE_FLAG_NONROT, q);
+	blk_queue_flag_clear(QUEUE_FLAG_ADD_RANDOM, q);
+
 	if (sdkp->device->type == TYPE_ZBC) {
 		/* Host-managed */
 		blk_queue_set_zoned(sdkp->disk, BLK_ZONED_HM);
